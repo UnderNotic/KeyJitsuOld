@@ -13,6 +13,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "KeyJitsu", "src\KeyJitsu\KeyJitsu.xproj", "{B6FAF093-2BAC-4F71-B866-23530756ACB2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{CF9429D7-7AFD-4D44-9C73-ACE1B0183DFC}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "KeyJitsu.Tests", "test\KeyJitsu.Tests\KeyJitsu.Tests.xproj", "{F8B79259-3737-478B-85C3-305969985B0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,11 +27,16 @@ Global
 		{B6FAF093-2BAC-4F71-B866-23530756ACB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6FAF093-2BAC-4F71-B866-23530756ACB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6FAF093-2BAC-4F71-B866-23530756ACB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8B79259-3737-478B-85C3-305969985B0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8B79259-3737-478B-85C3-305969985B0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8B79259-3737-478B-85C3-305969985B0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8B79259-3737-478B-85C3-305969985B0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B6FAF093-2BAC-4F71-B866-23530756ACB2} = {87F2DB62-D31B-466B-9544-A11B029A0643}
+		{F8B79259-3737-478B-85C3-305969985B0C} = {CF9429D7-7AFD-4D44-9C73-ACE1B0183DFC}
 	EndGlobalSection
 EndGlobal
