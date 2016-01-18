@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Builder;
+using Microsoft.AspNet.FileProviders;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
+using Microsoft.AspNet.StaticFiles;
 using Microsoft.Extensions.DependencyInjection;
+
 
 namespace KeyJitsu
 {
@@ -21,11 +25,12 @@ namespace KeyJitsu
         public void Configure(IApplicationBuilder app)
         {
             app.UseIISPlatformHandler();
-
-            app.Run(async (context) =>
+            app.UseDefaultFiles();
+            app.UseStaticFiles(new StaticFileOptions()
             {
-                await context.Response.WriteAsync("Hello World!");
+                FileProvider = new PhysicalFileProvider(Directory.GetCurrentDirectory() + @"\sth1")
             });
+          
         }
 
         // Entry point for the application.
