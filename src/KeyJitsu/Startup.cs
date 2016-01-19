@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -26,11 +26,9 @@ namespace KeyJitsu
         {
             app.UseIISPlatformHandler();
             app.UseDefaultFiles();
-            app.UseStaticFiles(new StaticFileOptions()
-            {
-                FileProvider = new PhysicalFileProvider(Directory.GetCurrentDirectory() + @"\sth1")
-            });
-          
+            app.UseStaticFiles();
+
+
         }
 
         // Entry point for the application.
