@@ -7,16 +7,16 @@ const tslint = require('gulp-tslint');
 
 // clean the contents of the distribution directory
 gulp.task("clean", function () {
-    return del("./wwwroot/**/*");
+    return del("dist/**/*");
 });
 
 // TypeScript compile
 gulp.task("compile", ["clean"], function () {
     return gulp
-      .src("app/**/*.ts")
+      .src("src/app/**/*.ts")
+      .pipe(sourcemaps.init())
       .pipe(typescript(tscConfig.compilerOptions))
-      .pipe(sourcemaps.write("."))  
-      .pipe(gulp.dest("wwwroot"));
+      .pipe(gulp.dest("dist/app"));
 });
 
 // copy libraries
@@ -27,23 +27,26 @@ gulp.task('copy:libs', ['clean'], function () {
             './node_modules/angular2/bundles/angular2-polyfills.js',
             './node_modules/systemjs/dist/system.src.js',
             './node_modules/rxjs/bundles/Rx.js',
-            './node_modules/angular2/bundles/angular2.dev.js',
-            './node_modules/angular2/bundles/router.dev.js'
-        ])
-        .pipe(gulp.dest('wwwroot/libs'));
+            './node_modules/angular2/bundles/angular2.dev.js'
+    ])
+        .pipe(gulp.dest('dist/libs'));
 });
 
 // copy static assets - i.e. non TypeScript compiled source
 gulp.task('copy:assets', ['clean'], function () {
-    return gulp.src(['App/**/*', '!App/**/*.ts'], { base: './App' })
-        .pipe(gulp.dest('wwwroot'));
+    return gulp.src(['src/**/*', '!src/**/*.ts'])
+        .pipe(gulp.dest('dist'));
 });
 
 gulp.task('tslint', function () {
-    return gulp.src('App/**/*.ts')
+    return gulp.src('src/app/**/*.ts')
       .pipe(tslint())
       .pipe(tslint.report('verbose'));
 });
+
+gulp.task('serve', function(){
+    require('lite-server');
+})
 
 gulp.task("build", ["tslint", "compile", "copy:libs", "copy:assets"]);
 gulp.task("default", ["build"]);

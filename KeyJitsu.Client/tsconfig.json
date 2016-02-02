@@ -1,8 +1,10 @@
+
 {
   "compilerOptions": {
-    "outDir": "wwwroot",
     "target": "es5",
     "module": "system",
+    "outDir": "dist",
+    "moduleResolution": "node",
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
