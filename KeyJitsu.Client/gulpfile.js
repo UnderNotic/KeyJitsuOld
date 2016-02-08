@@ -8,9 +8,9 @@ const sourcemaps = require('gulp-sourcemaps');
 const tslint = require('gulp-tslint');
 
 //watch copy only changed assets to dist and compile typescript
-gulp.task('watch', function () {
+gulp.task('watch',['build'], function () {
     gulp.src(['src/**/*', '!src/**/*.ts'], { base: 'src' })
-        .pipe(watch(['src/**/*', '!src/**/*.ts'], { base: 'src' }))
+        .pipe(watch(['src/**/*', '!src/**/*.ts']))
         .pipe(gulp.dest('dist'));
 
     gulp.watch('src/app/**/*.ts', ['compile']);
@@ -36,6 +36,7 @@ gulp.task('copy:libs', function () {
         './node_modules/es6-shim/es6-shim.js',
         './node_modules/systemjs/dist/system-polyfills.js',
         './node_modules/angular2/bundles/angular2-polyfills.js',
+        './node_modules/angular2/bundles/router.dev.js',        
         './node_modules/systemjs/dist/system.src.js',
         './node_modules/rxjs/bundles/Rx.js',
         './node_modules/angular2/bundles/angular2.dev.js',
