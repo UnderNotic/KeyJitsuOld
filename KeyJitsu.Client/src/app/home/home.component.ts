@@ -1,12 +1,19 @@
 import {Component} from 'angular2/core'
-import {Router} from 'angular2/router'
+import {Router, RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router'
+
+import {DashboardComponent} from '../dashboard/dashboard.component'
 
 @Component({
-    selector: 'keyjitsu-app',
-    templateUrl: './app/home/app.component.html'
+    selector: 'home',
+    templateUrl: './app/home/home.component.html',
+    directives: [ROUTER_DIRECTIVES]
 })
-export class AppComponent{
+export class HomeComponent {
     constructor(
         private _router: Router
-    ){ }
+    ) { }
+
+    onVisualStudioClick() {
+        this._router.navigate(['Dashboard', { name: "vs" }]);
+    }
 }

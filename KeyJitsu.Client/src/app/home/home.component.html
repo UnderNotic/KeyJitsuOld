@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row vertical-center">
         <div class="col-xs-4 col-md-4">
-            <a href="#" class="thumbnail main-logo">
+            <a href="#" (click)="onVsCodeClick()" class="thumbnail main-logo">
                 <img src="./assets/images/visual-studio-code.svg" alt="...">
                 <div class="caption">
                     <center>
@@ -11,7 +11,7 @@
             </a>
         </div>
         <div class="col-xs-4 col-md-4">
-            <a href="#" class="thumbnail text-center main-logo">
+            <a (click)="onVisualStudioClick()" class="thumbnail text-center main-logo">
                 <img src="./assets/images/visual-studio.svg" alt="...">
                 <div class="caption">
                     <center>
@@ -20,7 +20,7 @@
             </a>
         </div>
         <div class="col-xs-4 col-md-4">
-            <a href="#" class="thumbnail main-logo">
+            <a href="#" (click)="onIntellijClick()" class="thumbnail main-logo">
                 <img src="./assets/images/intellij.svg" alt="...">
 
                 <div class="caption">

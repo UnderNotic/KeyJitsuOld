@@ -1,28 +1,29 @@
 {
-    "name": "KeyJitsu",
-    "version": "0.0.1",
-    "author": "undernotic@undernotic@gmail.com",
-    "license": "MIT",
-    "scripts": {},
-    "dependencies": {
-        "angular2": "^2.0.0-beta.3",
-        "systemjs": "0.19.6",
-        "es6-promise": "3.0.2",
-        "es6-shim": "0.33.3",
-        "reflect-metadata": "0.1.2",
-        "rxjs": "^5.0.0-beta.1",
-        "zone.js": "0.5.10",
-        "bootstrap": "^3.3.6"
-    },
-    "devDependencies": {
-        "run-sequence": "^1.1.5",
-        "gulp": "^3.9.0",
-        "gulp-watch": "^4.3.5",
-        "gulp-typescript": "^2.10.0",
-        "gulp-sourcemaps": "^1.6.0",
-        "gulp-tslint": "^4.3.1",
-        "tslint": "^3.3.0",
-        "del": "^2.2.0",
-        "lite-server": "^2.0.1"
-    }
+  "name": "KeyJitsu",
+  "version": "0.0.1",
+  "author": "undernotic@undernotic@gmail.com",
+  "license": "MIT",
+  "scripts": {},
+  "dependencies": {
+    "angular2": "^2.0.0-beta.3",
+    "bootstrap": "^3.3.6",
+    "es6-promise": "3.0.2",
+    "es6-shim": "0.33.3",
+    "ng2-dragula": "^1.0.3",
+    "reflect-metadata": "0.1.2",
+    "rxjs": "^5.0.0-beta.1",
+    "systemjs": "0.19.6",
+    "zone.js": "0.5.10"
+  },
+  "devDependencies": {
+    "run-sequence": "^1.1.5",
+    "gulp": "^3.9.0",
+    "gulp-watch": "^4.3.5",
+    "gulp-typescript": "^2.10.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-tslint": "^4.3.1",
+    "tslint": "^3.3.0",
+    "del": "^2.2.0",
+    "lite-server": "^2.0.1"
+  }
 }
