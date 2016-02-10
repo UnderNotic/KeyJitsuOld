@@ -40,7 +40,8 @@ gulp.task('copy:libs', function () {
         './node_modules/systemjs/dist/system.src.js',
         './node_modules/rxjs/bundles/Rx.js',
         './node_modules/angular2/bundles/angular2.dev.js',
-        './node_modules/bootstrap/dist/js/bootstrap.js'
+        './node_modules/bootstrap/dist/js/bootstrap.js',
+        './node_modules/dragula/dist/dragula.js'        
     ])
         .pipe(gulp.dest('./dist/libs'));
 });
