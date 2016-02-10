@@ -1,14 +1,41 @@
-<div>
-    <div class='wrapper'>
-      <div class='container' [dragula]='"first-bag"'>
-        <div>You can move these elements between these two containers</div>
-        <div>Moving them anywhere else isn't quite possible</div>
-        <div>There's also the possibility of moving elements around in the same container, changing their position</div>
-      </div>
-      <div class='container' [dragula]='"first-bag"'>
-        <div>This is the default use case. You only need to specify the containers you want to use</div>
-        <div>More interactive use cases lie ahead</div>
-        <div>Make sure to check out the <a href='https://github.com/bevacqua/dragula#readme'>documentation on GitHub!</a></div>
-      </div>
+<div class="row">
+    <div class="jumbotron">
+        <h1>
+        <img src="./assets/images/visual-studio.svg" class="small-logo" alt="...">
+         Visual Studio</h1>
+        <p>Ninja swords are always straight with a square handle guard. Always. Curves are for girls. </p>
     </div>
-  </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title">Drag your chosen categories from here</h2>
+            </div>
+            <div class="panel-body" [dragula]="'first-bag'">
+                <ul class="list-group" *ngFor="#category of categories">
+                    <li class="list-group-item">{{category.name}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h2 class="panel-title">Drop your chosen categories here</h2>
+            </div>
+            <div class="panel-body" [dragula]="'first-bag'">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+       <div class="col-md-2">
+        <a href="#" class="btn btn-primary btn-lg">Pussy out...</a>
+    </div>
+    <div class="col-md-6 col-md-offset-4">
+        <a href="#" class="btn btn-success btn-lg">Fight!</a>
+    </div>
+</div>
