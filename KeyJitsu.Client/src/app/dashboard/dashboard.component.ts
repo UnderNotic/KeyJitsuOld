@@ -40,5 +40,9 @@ export class DashboardComponent implements OnInit {
             }
         ];
     }
+    
+     onFightClick() {
+        this._router.navigate(['Game']);
+    }
 
 } 
