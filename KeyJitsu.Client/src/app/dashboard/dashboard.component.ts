@@ -2,12 +2,13 @@ import {Component, OnInit} from 'angular2/core'
 import {Router} from 'angular2/router'
 import {Dragula} from '../shared/directives/dragula.directive'
 import {DragulaService} from '../shared/providers/dragula.provider'
+import {JumboComponent} from '../jumbo/jumbo.component'
 
 @Component({
     selector: 'dashboard',
     templateUrl: './app/dashboard/dashboard.component.html',
     styleUrls: ['./app/dashboard/dashboard.component.css'],
-    directives: [Dragula],
+    directives: [Dragula, JumboComponent],
     viewProviders: [DragulaService]
 })
 export class DashboardComponent implements OnInit {
