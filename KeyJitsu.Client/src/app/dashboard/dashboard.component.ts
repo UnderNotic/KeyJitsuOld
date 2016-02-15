@@ -13,7 +13,7 @@ import {JumboComponent} from '../jumbo/jumbo.component'
 })
 export class DashboardComponent implements OnInit {
 
-    categories: Object[] = []
+    categories: Object[];
 
     constructor(
         private _router: Router
@@ -30,18 +30,17 @@ export class DashboardComponent implements OnInit {
                 {
                     name: "Cut",
                     hotkey: "Ctrl + X"
-                }]
+                }]},
+        {
+            name: "Navigation"
         },
-            {
-                name: "Navigation"
-            },
-            {
-                name: "File Management"
-            }
-        ];
+        {
+            name: "File Management"
+        }
+    ];
     }
-    
-     onFightClick() {
+
+    onFightClick() {
         this._router.navigate(['Game']);
     }
 

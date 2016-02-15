@@ -1,12 +1,40 @@
+<jumbo></jumbo>
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-6 text-center">
         <div class="form-group">
-            <label class="control-label" for="focusedInput">Focused input</label>
-            <input class="form-control" id="focusedInput" type="text" value="This is focused...">
+            <label class="control-label" for="focusedInput">
+                <h3>Focused input</h3></label>
+            <input shortcutInput class="form-control" id="focusedInput" type="text" value="Type in shortcut" autofocus>
         </div>
     </div>
     <div class="col-md-6">
     </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">History</div>
+            <div class="panel-body">
+                <ul class="list-group" *ngFor="#historyShortcut of historyShortcuts">
+                    <li class="list-group-item">{{historyShortcut.hotkey}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 text-center">
+          <h2>Cool image with shortcut</h2>
+    </div>
+</div>
 
 
+<!--this should be on sword more red more blood better score-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="progress">
+            <div class="progress-bar progress-bar-success" style="width: 35%"></div>
+            <div class="progress-bar progress-bar-danger" style="width: 65%"></div>
+        </div>
+    </div>
 </div>
