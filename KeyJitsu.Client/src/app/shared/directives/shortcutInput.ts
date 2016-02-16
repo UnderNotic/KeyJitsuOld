@@ -1,4 +1,5 @@
-import {Directive, ElementRef, Input } from 'angular2/core'
+import {Directive, ElementRef, Input, Output, EventEmitter } from 'angular2/core'
+import {KeyCodeParser} from '../services/keyCodeParser.service'
 
 @Directive({
     selector: '[shortcutInput]',
@@ -8,30 +9,31 @@ import {Directive, ElementRef, Input } from 'angular2/core'
     }
 })
 export class ShortcutInputDirective {
-    private keyMap: boolean[]
-    constructor(private el: ElementRef) {
-        this.keyMap = [];
-        
-    }
+    @Output() keysPressed = new EventEmitter();
 
+    private keyMap: boolean[] = []
+    constructor(private _el: ElementRef, private _keyCodeParser: KeyCodeParser) { }
     onKeyDownUp(event: KeyboardEvent) {
         this.keyMap[event.keyCode] = event.type == 'keydown';
+        this.getPressedKeys();
     }
 
     getPressedKeys() {
         var pressedKeysCodes = [];
-        for (let index = 0; index < this.keyMap.length; index++) {
-            if (this.keyMap[index] === true)
-                pressedKeysCodes.push(this.keyMap[index]);
-        }
-        return pressedKeysCodes.map(code => String.fromCharCode(code));
+        this.keyMap.forEach((isPressed, keyCode) => {
+            if (isPressed) {
+                pressedKeysCodes.push(keyCode);
+            }
+        });
+        var pressedCharacters = pressedKeysCodes.map(keyCode => this._keyCodeParser.mapKeyCodeToActualCharacter(keyCode))
+        this.keysPressed.emit(pressedCharacters);
     }
 
     setWrongStyle() {
-        this.el.nativeElement.style.backgroundColor = "red";
+        this._el.nativeElement.style.backgroundColor = "red";
     }
 
     setCorrectStyle() {
-        this.el.nativeElement.style.backgroundColor = "green";
+        this._el.nativeElement.style.backgroundColor = "green";
     }
 }

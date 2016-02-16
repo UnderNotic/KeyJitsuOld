@@ -5,6 +5,7 @@ import {HomeComponent} from '../home/home.component'
 import {DashboardComponent} from '../dashboard/dashboard.component'
 import {GameComponent} from '../game/game.component'
 
+import {KeyCodeParser} from '../shared/services/keyCodeParser.service'
 
 @RouteConfig([
     { path: '/home', name: 'Home', component: HomeComponent, useAsDefault: true },
@@ -14,7 +15,8 @@ import {GameComponent} from '../game/game.component'
 @Component({
     selector: 'keyjitsu-app',
     templateUrl: './app/main/main.component.html',
-    directives: [ROUTER_DIRECTIVES]
+    directives: [ROUTER_DIRECTIVES],
+    providers: [KeyCodeParser]
 })
 export class MainComponent {
     constructor(

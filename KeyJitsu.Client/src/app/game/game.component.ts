@@ -10,19 +10,19 @@ import {ShortcutInputDirective} from '../shared/directives/shortcutInput'
     directives: [JumboComponent, ShortcutInputDirective]
 })
 export class GameComponent implements OnInit {
-    
-    historyShortcuts: Shortcut[]
- 
-    constructor() {
-        this.historyShortcuts = [{hotkey: "asd", name: "some shortcut"}];
-        
-     }
 
-    ngOnInit() {
-      
+    private keyMap: boolean[] = []
+    historyShortcuts: Shortcut[]
+
+    constructor() {
+        this.historyShortcuts = [{ hotkey: "asd", name: "some shortcut" }];
     }
 
-    eventHandler(event){
-        console.log("The event was ", event, event.keyCode, event.keyIdentifier);
+    ngOnInit() {
+
+    }
+    
+    onKeysPressed(keysString){
+        console.log("hallo key is: " + keysString);
     }
 }

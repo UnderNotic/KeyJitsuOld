@@ -4,7 +4,7 @@
         <div class="form-group">
             <label class="control-label" for="focusedInput">
                 <h3>Focused input</h3></label>
-            <input shortcutInput class="form-control" id="focusedInput" type="text" value="Type in shortcut" autofocus>
+            <input shortcutInput (keysPressed)="onKeysPressed($event)" class="form-control" id="focusedInput" type="text" value="Type in shortcut" autofocus>
         </div>
     </div>
     <div class="col-md-6">
