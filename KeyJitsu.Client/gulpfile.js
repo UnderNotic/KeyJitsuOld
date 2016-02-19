@@ -27,6 +27,7 @@ gulp.task('compile', function () {
         .src('src/app/**/*.ts')
         .pipe(sourcemaps.init())
         .pipe(typescript(tscConfig.compilerOptions))
+        .pipe(sourcemaps.write("."))
         .pipe(gulp.dest("dist/app"));
 });
 
