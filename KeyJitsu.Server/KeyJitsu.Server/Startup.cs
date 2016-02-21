@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Autofac;
+using Autofac.Integration.WebApi;
 using Microsoft.Owin;
 using Owin;
 
@@ -12,13 +16,35 @@ namespace KeyJitsu.Server
     {
         public void Configuration(IAppBuilder app)
         {
-            GlobalConfiguration.Configure(WebApiConfig.Register);
+            var httpConfig = new HttpConfiguration();
+            ConfigureRouting(httpConfig);
 
-            app.Run(context =>
-            {
-                context.Response.ContentType = "text/plain";
-                return context.Response.WriteAsync("Hello World!");
-            });
+            var builder = new ContainerBuilder();
+            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+            RegisterServices(builder);
+            var container = builder.Build();
+            httpConfig.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+
+            app.UseAutofacMiddleware(container);
+            app.UseAutofacWebApi(httpConfig);
+            app.UseWebApi(httpConfig);
+        }
+
+        private void ConfigureRouting(HttpConfiguration httpConfiguration)
+        {
+            httpConfiguration.MapHttpAttributeRoutes();
+
+            httpConfiguration.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
+
+        }
+
+        private void RegisterServices(ContainerBuilder builder)
+        {
+            
         }
     }
 }
