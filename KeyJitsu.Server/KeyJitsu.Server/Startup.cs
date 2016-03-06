@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Autofac;
 using Autofac.Integration.WebApi;
+using KeyJitsu.Server.Providers;
+using KeyJitsu.Server.Services;
 using Microsoft.Owin;
 using Owin;
 
@@ -36,15 +38,15 @@ namespace KeyJitsu.Server
 
             httpConfiguration.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
+                routeTemplate: "api/{controller}/{action}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-
         }
 
         private void RegisterServices(ContainerBuilder builder)
         {
-            
+            builder.RegisterType<ShortcutDataProvider>().As<IShortcutDataProvider>();
+            builder.RegisterType<RandomShortcutPicker>().As<IRandomShortcutPicker>();
         }
     }
 }

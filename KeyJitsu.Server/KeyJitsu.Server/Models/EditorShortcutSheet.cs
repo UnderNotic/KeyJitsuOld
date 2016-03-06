@@ -6,9 +6,9 @@ namespace KeyJitsu.Server.Models
     public class EditorShortcutSheet
     {
         public string Editor { get; }
-        public ReadOnlyDictionary<string, ReadOnlyDictionary<string, string>> Categories { get; }
+        public ReadOnlyDictionary<string, IReadOnlyList<Shortcut>> Categories { get; }
 
-        public EditorShortcutSheet(string editor, ReadOnlyDictionary<string, ReadOnlyDictionary<string, string>> categories)
+        public EditorShortcutSheet(string editor, ReadOnlyDictionary<string, IReadOnlyList<Shortcut>> categories)
         {
             Editor = editor;
             Categories = categories;
