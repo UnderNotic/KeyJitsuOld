@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Reflection;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 using System.Web.Http;
 using Autofac;
 using Autofac.Integration.WebApi;

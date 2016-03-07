@@ -5,7 +5,6 @@ using KeyJitsu.Server.Providers;
 using KeyJitsu.Server.Services;
 using Moq;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace KeyJitsu.Server.Tests.Controllers
 {

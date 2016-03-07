@@ -19,7 +19,8 @@ export class GameComponent implements OnInit {
     }
 
     ngOnInit() {
-
+        
+            Mousetrap.bind('4', function() { console.log('4'); });
     }
     
     onKeysPressed(keysString){

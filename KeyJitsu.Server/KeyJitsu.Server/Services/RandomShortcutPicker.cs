@@ -32,7 +32,7 @@ namespace KeyJitsu.Server.Services
                     return shortcut;
                 }
             }
-            return shortcuts.Last();
+            return null;
         }
     }
 }
