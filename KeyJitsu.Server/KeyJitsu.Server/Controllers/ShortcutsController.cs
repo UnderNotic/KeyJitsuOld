@@ -26,7 +26,6 @@ namespace KeyJitsu.Server.Controllers
             return _randomShortcutPicker.GetRandomShortcutBasedOnPriorities(GetAllShortcuts(editor, categories).ToList());
         }
 
-
         public IEnumerable<Shortcut> GetAllShortcuts([FromUri] string editor, [FromUri] string[] categories)
         {
             return _shortcutDataProvider.ShortcutSheets.First(sheet => sheet.Editor == editor)

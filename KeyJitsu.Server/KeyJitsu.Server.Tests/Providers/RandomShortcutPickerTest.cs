@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using KeyJitsu.Server.Models;
 using KeyJitsu.Server.Services;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
-namespace KeyJitsu.Server.Tests
+namespace KeyJitsu.Server.Tests.Providers
 {
     [TestFixture]
     public class RandomShortcutPickerTest
@@ -12,6 +14,7 @@ namespace KeyJitsu.Server.Tests
         [Test]
         public void GetRandomShortcutBasedOnProrities_Doent_Return_Above()
         {
+            // Arrange
             var shortcuts = new List<Shortcut>
             {
                 new Shortcut(1, "Symbol code completion", "Ctrl + Space"),
@@ -19,16 +22,14 @@ namespace KeyJitsu.Server.Tests
                 new Shortcut(2, "Import symbol completion", "Shift + Alt + Space")
             };
 
-
             var picker = new RandomShortcutPicker();
 
-
+            // Act
             var pick = picker.GetRandomShortcutBasedOnPriorities(shortcuts);
-
-
-            var x = 0;
-
-
+            
+            // Assert
+            Assert.IsNotNull(picker);
+            CollectionAssert.IsSubsetOf(new List<Shortcut> {pick}, shortcuts);
         }
     }
 }

@@ -77,8 +77,8 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ShortcutConstrollerTest.cs" />
-    <Compile Include="RandomShortcutPickerTest.cs" />
+    <Compile Include="Controllers\ShortcutConstrollerTest.cs" />
+    <Compile Include="Providers\RandomShortcutPickerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

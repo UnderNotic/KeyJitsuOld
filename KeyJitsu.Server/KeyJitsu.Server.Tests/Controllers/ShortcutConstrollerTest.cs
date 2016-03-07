@@ -2,11 +2,12 @@
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using KeyJitsu.Server.Controllers;
 using KeyJitsu.Server.Providers;
+using KeyJitsu.Server.Services;
 using Moq;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
-namespace KeyJitsu.Server.Tests
+namespace KeyJitsu.Server.Tests.Controllers
 {
     [TestFixture]
     public class ShortcutConstrollerTest
@@ -16,7 +17,7 @@ namespace KeyJitsu.Server.Tests
         {
             // Arrange
             var provider = new ShortcutDataProvider();
-            var controller = new ShortcutsController(provider);
+            var controller = new ShortcutsController(provider, new Mock<IRandomShortcutPicker>().Object);
 
 
             // Act
@@ -37,7 +38,7 @@ namespace KeyJitsu.Server.Tests
         {
             // Arrange
             var provider = new ShortcutDataProvider();
-            var controller = new ShortcutsController(provider);
+            var controller = new ShortcutsController(provider, new Mock<IRandomShortcutPicker>().Object);
 
 
             // Act
