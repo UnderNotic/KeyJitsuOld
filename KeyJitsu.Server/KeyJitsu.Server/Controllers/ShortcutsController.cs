@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.CodeDom;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using KeyJitsu.Server.Models;
@@ -21,6 +22,26 @@ namespace KeyJitsu.Server.Controllers
         public Shortcut GetSingleShortcut([FromUri] string editor, [FromUri] string[] categories)
         {
             return _randomShortcutPicker.GetRandomShortcutBasedOnPriorities(GetAllShortcuts(editor, categories).ToList());
+        }
+
+        public string GetSingleShortcutQuestion([FromUri] string editor, [FromUri] string[] categories)
+        {
+            return _randomShortcutPicker.GetRandomShortcutBasedOnPriorities(GetAllShortcuts(editor, categories).ToList()).Name;
+        }
+
+        public bool GetSingleShortcutAnswer([FromUri] string editor, [FromUri] string name, [FromUri] string hotkey)
+        {
+            try
+            {
+                return _shortcutDataProvider.ShortcutSheets.First(sheet => sheet.Editor == editor)
+                    .Categories.SelectMany(pair => pair.Value)
+                    .First(shortcut => shortcut.Name == name)
+                    .Keys == hotkey;
+            }
+            catch
+            {
+                return false;
+            }                
         }
 
         public IEnumerable<Shortcut> GetAllShortcuts([FromUri] string editor, [FromUri] string[] categories)

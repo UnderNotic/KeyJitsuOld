@@ -1,18 +1,22 @@
 import {Injectable} from 'angular2/core'
 import {Http, Response} from 'angular2/http'
 import {Shortcut} from '../../interfaces/shortcut'
-import {Observable} from 'rxjs/observable'
+import {Observable} from 'rxjs/Rx'
 
+@Injectable()
 export class ShortcutService {
 
     private URL: string = "http://localhost:61704/";
 
     constructor(private http: Http) { }
 
-    getSingleShortcut(editor: string, categories: string[]) {
+    getSingleShortcutQuestion(editor: string, categories: string[]) : Observable<string> {
         var category = categories.reduce((previousValue, currentValue) => `${previousValue}&category[]=${currentValue}`);
-
-        this.http.get(`${this.URL}/GetSingleShortcut?editor=${editor}&categories=${category}`).map(res => <Shortcut[]>res.json().data).catch(this.handleError)
+        return this.http.get(`${this.URL}/api/Shortcuts/GetSingleShortcutQuestion?editor=${editor}&categories=${category}`).map(res => <string>res.json()).catch(this.handleError);
+    }
+    
+    getSingleShortcutAnswer(editor: string, name: string, hotkey: string){
+        
     }
 
     private handleError(error: Response) {

@@ -15,5 +15,4 @@ namespace KeyJitsu.Server.Models
             Keys = keys;
         }
     }
-
 }

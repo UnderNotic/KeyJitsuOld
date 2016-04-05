@@ -1,13 +1,11 @@
 <jumbo></jumbo>
 <div class="row">
-    <div class="col-md-6 text-center">
+    <div class="col-md-12 text-center">
         <div class="form-group">
             <label class="control-label" for="focusedInput">
-                <h3>Focused input</h3></label>
+                <h3>{{shortcutQuestion}}</h3></label>
             <input shortcutInput (keysPressed)="onKeysPressed($event)" class="form-control" id="focusedInput" type="text" value="Type in shortcut" autofocus>
         </div>
-    </div>
-    <div class="col-md-6">
     </div>
 </div>
 
@@ -24,6 +22,7 @@
     </div>
 
     <div class="col-md-6 text-center">
+        <br>
           <h2>Cool image with shortcut</h2>
     </div>
 </div>
