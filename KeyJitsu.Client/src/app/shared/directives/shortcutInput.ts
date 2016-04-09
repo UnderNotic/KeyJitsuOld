@@ -13,19 +13,16 @@ export class ShortcutInputDirective {
 
     private keyMap: boolean[] = []
     constructor(private _el: ElementRef, private _keyCodeParser: KeyCodeParser) {
-
-
-        this.preventDefaultKeyBehaviour();
+        this.listenForKeyDownUp();
     }
 
-    private preventDefaultKeyBehaviour() {
+    private listenForKeyDownUp() {
         var that = this;
         document.onkeyup = function(event) {
             that.onKeyDownUp(event);
             event.stopPropagation();
             event.preventDefault();
         }
-
         document.onkeydown = function(event) {
             that.onKeyDownUp(event);
             event.stopPropagation();

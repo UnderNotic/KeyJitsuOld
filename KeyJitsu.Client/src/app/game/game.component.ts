@@ -1,8 +1,11 @@
 import {Component, OnInit} from 'angular2/core'
 import {JumboComponent} from '../jumbo/jumbo.component'
 import {Shortcut} from '../interfaces/shortcut'
+import {ShortcutAnswer} from '../interfaces/shortcutAnswer'
 import {ShortcutInputDirective} from '../shared/directives/shortcutInput'
 import {ShortcutService} from '../shared/services/shortcut.service'
+import {Router} from 'angular2/router'
+
 
 @Component({
     selector: 'game',
@@ -14,20 +17,26 @@ import {ShortcutService} from '../shared/services/shortcut.service'
 export class GameComponent implements OnInit {
 
     private keyMap: boolean[] = []
-    historyShortcuts: Shortcut[]
+    historyShortcuts: ShortcutAnswer[]
     shortcutQuestion: string
 
-    constructor(private _shortcutService: ShortcutService) {
-        this.historyShortcuts = [{ hotkey: "asd", name: "some shortcut" }];
+    constructor(private _shortcutService: ShortcutService, private _router: Router) {
     }
 
     ngOnInit() {
-        this._shortcutService.getSingleShortcutQuestion("VisualStudioResharper", ["Explore", "Navigate"]).subscribe(question => this.shortcutQuestion = question;
-        
-        Mousetrap.bind('4', function() { console.log('4'); });
+        this._shortcutService.getSingleShortcutQuestion("VisualStudioResharper", ["Explore", "Navigate"]).subscribe(question => this.shortcutQuestion = question);
     }
-    
-    onKeysPressed(keysString){
-        console.log("hallo key is: " + keysString);
+
+    onKeysPressed(keysString) {
+        this._shortcutService.getSingleShortcutAnswer("VisualStudioResharper", this.shortcutQuestion, keysString).subscribe(isCorrect => this.processAnswer(isCorrect));
+    }
+
+    processAnswer(correct: boolean) {
+          this.historyShortcuts.push({name: this.shortcutQuestion, correct: correct});
+    }
+
+
+    onPussyOutClick() {
+        this._router.navigate(['Home']);
     }
 }
