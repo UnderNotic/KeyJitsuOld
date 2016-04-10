@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Input, Output, EventEmitter } from 'angular2/core'
+import {Directive, ElementRef, Input, Output, EventEmitter, OnDestroy } from 'angular2/core'
 import {KeyCodeParser} from '../services/keyCodeParser.service'
 
 @Directive({
@@ -8,7 +8,7 @@ import {KeyCodeParser} from '../services/keyCodeParser.service'
     //     '(keyup)': 'onKeyDownUp($event)'
     // }
 })
-export class ShortcutInputDirective {
+export class ShortcutInputDirective implements OnDestroy {
     @Output() keysPressed = new EventEmitter();
 
     private keyMap: boolean[] = []
@@ -22,12 +22,12 @@ export class ShortcutInputDirective {
             that.onKeyDownUp(event);
             event.stopPropagation();
             event.preventDefault();
-        }
+        };
         document.onkeydown = function(event) {
             that.onKeyDownUp(event);
             event.stopPropagation();
             event.preventDefault();
-        }
+        };
     }
 
 
@@ -53,5 +53,11 @@ export class ShortcutInputDirective {
 
     setCorrectStyle() {
         this._el.nativeElement.style.backgroundColor = "green";
+    }
+
+
+    ngOnDestroy() {
+        document.onkeyup = function(event) { };
+        document.onkeydown = function(event) { };
     }
 }

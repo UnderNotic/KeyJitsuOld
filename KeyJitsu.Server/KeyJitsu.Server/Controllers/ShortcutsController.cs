@@ -19,12 +19,12 @@ namespace KeyJitsu.Server.Controllers
             _randomShortcutPicker = randomShortcutPicker;
         }
 
-        public Shortcut GetSingleShortcut([FromUri] string editor, [FromUri] string[] categories)
+        public Shortcut GetSingleShortcut([FromUri] string editor, [FromUri] IEnumerable<string> categories)
         {
             return _randomShortcutPicker.GetRandomShortcutBasedOnPriorities(GetAllShortcuts(editor, categories).ToList());
         }
 
-        public string GetSingleShortcutQuestion([FromUri] string editor, [FromUri] string[] categories)
+        public string GetSingleShortcutQuestion([FromUri] string editor, [FromUri] IEnumerable<string> categories)
         {
             return _randomShortcutPicker.GetRandomShortcutBasedOnPriorities(GetAllShortcuts(editor, categories).ToList()).Name;
         }
@@ -44,10 +44,17 @@ namespace KeyJitsu.Server.Controllers
             }                
         }
 
-        public IEnumerable<Shortcut> GetAllShortcuts([FromUri] string editor, [FromUri] string[] categories)
+        public IList<string> GetAllCategories([FromUri] string editor)
+        {
+            return
+                _shortcutDataProvider.ShortcutSheets.First(sheet => sheet.Editor == editor)
+                    .Categories.Select(category => category.Key).ToList();
+        } 
+
+        public IList<Shortcut> GetAllShortcuts([FromUri] string editor, [FromUri] IEnumerable<string> categories)
         {
             return _shortcutDataProvider.ShortcutSheets.First(sheet => sheet.Editor == editor)
-                 .Categories.Where(category => categories.Contains(category.Key)).SelectMany(category => category.Value);
+                 .Categories.Where(category => categories.Contains(category.Key)).SelectMany(category => category.Value).ToList();
         }
     }
 }

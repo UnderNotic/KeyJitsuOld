@@ -1,6 +1,5 @@
 import {Component} from 'angular2/core'
 import {Router, RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router'
-
 import {DashboardComponent} from '../dashboard/dashboard.component'
 
 @Component({
@@ -14,6 +13,6 @@ export class HomeComponent {
     ) { }
 
     onVisualStudioClick() {
-        this._router.navigate(['Dashboard', { name: "vs" }]);
+        this._router.navigate(['Dashboard', { editor: "VisualStudioResharper" }]);
     }
 }

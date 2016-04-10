@@ -16,9 +16,12 @@ export class ShortcutService {
     }
 
     getSingleShortcutAnswer(editor: string, name: string, hotkey: string): Observable<boolean> {
-        return this.http.get(`${URL}/Shortcuts/GetSingleShortcutAnswer?editor=${editor}&name=${name}&hotkey=${hotkey}`).map(res => <boolean>res.json()).catch(this.handleError);
+        return this.http.get(`${this.URL}/Shortcuts/GetSingleShortcutAnswer?editor=${editor}&name=${name}&hotkey=${hotkey}`).map(res => <boolean>res.json()).catch(this.handleError);
     }
 
+    getAllCategories(editor: string): Observable<string[]> {
+        return this.http.get(`${this.URL}/Shortcuts/GetAllCategories?editor=${editor}`).map(res => <string[]>res.json()).catch(this.handleError)
+    }
     private handleError(error: Response) {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');

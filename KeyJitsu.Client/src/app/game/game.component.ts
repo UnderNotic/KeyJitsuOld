@@ -4,7 +4,7 @@ import {Shortcut} from '../interfaces/shortcut'
 import {ShortcutAnswer} from '../interfaces/shortcutAnswer'
 import {ShortcutInputDirective} from '../shared/directives/shortcutInput'
 import {ShortcutService} from '../shared/services/shortcut.service'
-import {Router} from 'angular2/router'
+import {Router, RouteParams} from 'angular2/router'
 
 
 @Component({
@@ -17,22 +17,24 @@ import {Router} from 'angular2/router'
 export class GameComponent implements OnInit {
 
     private keyMap: boolean[] = []
-    historyShortcuts: ShortcutAnswer[]
+    historyShortcuts: ShortcutAnswer[] = []
     shortcutQuestion: string
+    editor: string
 
-    constructor(private _shortcutService: ShortcutService, private _router: Router) {
+    constructor(private _shortcutService: ShortcutService, private _router: Router, routerParams: RouteParams) {
+        this.editor = routerParams.get('editor');
     }
 
     ngOnInit() {
-        this._shortcutService.getSingleShortcutQuestion("VisualStudioResharper", ["Explore", "Navigate"]).subscribe(question => this.shortcutQuestion = question);
+        this._shortcutService.getSingleShortcutQuestion(this.editor, ["Explore", "Navigate"]).subscribe(question => this.shortcutQuestion = question);
     }
 
     onKeysPressed(keysString) {
-        this._shortcutService.getSingleShortcutAnswer("VisualStudioResharper", this.shortcutQuestion, keysString).subscribe(isCorrect => this.processAnswer(isCorrect));
+        this._shortcutService.getSingleShortcutAnswer(this.editor, this.shortcutQuestion, keysString).subscribe(isCorrect => this.processAnswer(isCorrect));
     }
 
     processAnswer(correct: boolean) {
-          this.historyShortcuts.push({name: this.shortcutQuestion, correct: correct});
+        this.historyShortcuts.push({ name: this.shortcutQuestion, correct: correct });
     }
 
 
