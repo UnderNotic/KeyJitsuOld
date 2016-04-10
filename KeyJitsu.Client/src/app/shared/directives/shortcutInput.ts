@@ -1,30 +1,28 @@
 import {Directive, ElementRef, Input, Output, EventEmitter, OnDestroy } from 'angular2/core'
 import {KeyCodeParser} from '../services/keyCodeParser.service'
-
+// use rx to capture keyboard input with throttle
 @Directive({
     selector: '[shortcutInput]',
-    // host: {
-    //     '(keydown)': 'onKeyDownUp($event)',
-    //     '(keyup)': 'onKeyDownUp($event)'
-    // }
+    host: {
+        '(keydown)': 'onKeyDownUp($event)',
+        '(keyup)': 'onKeyDownUp($event)'
+    }
 })
 export class ShortcutInputDirective implements OnDestroy {
     @Output() keysPressed = new EventEmitter();
 
     private keyMap: boolean[] = []
     constructor(private _el: ElementRef, private _keyCodeParser: KeyCodeParser) {
-        this.listenForKeyDownUp();
+        this.preventDefaultKeyBehaviour();
     }
 
-    private listenForKeyDownUp() {
+    private preventDefaultKeyBehaviour() {
         var that = this;
         document.onkeyup = function(event) {
-            that.onKeyDownUp(event);
             event.stopPropagation();
             event.preventDefault();
         };
         document.onkeydown = function(event) {
-            that.onKeyDownUp(event);
             event.stopPropagation();
             event.preventDefault();
         };

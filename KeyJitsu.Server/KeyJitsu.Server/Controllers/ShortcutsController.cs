@@ -26,7 +26,16 @@ namespace KeyJitsu.Server.Controllers
 
         public string GetSingleShortcutQuestion([FromUri] string editor, [FromUri] IEnumerable<string> categories)
         {
-            return _randomShortcutPicker.GetRandomShortcutBasedOnPriorities(GetAllShortcuts(editor, categories).ToList()).Name;
+            try
+            {
+                return
+                    _randomShortcutPicker.GetRandomShortcutBasedOnPriorities(
+                        GetAllShortcuts(editor, categories).ToList()).Name;
+            }
+            catch
+            {
+                return "Chosen category doesn't exist";
+            }
         }
 
         public bool GetSingleShortcutAnswer([FromUri] string editor, [FromUri] string name, [FromUri] string hotkey)

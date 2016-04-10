@@ -20,23 +20,30 @@ export class GameComponent implements OnInit {
     historyShortcuts: ShortcutAnswer[] = []
     shortcutQuestion: string
     editor: string
+    categories: string[]
 
     constructor(private _shortcutService: ShortcutService, private _router: Router, routerParams: RouteParams) {
         this.editor = routerParams.get('editor');
+        this.categories = routerParams.get('categories');
     }
 
     ngOnInit() {
-        this._shortcutService.getSingleShortcutQuestion(this.editor, ["Explore", "Navigate"]).subscribe(question => this.shortcutQuestion = question);
+        this.getQuestion();
     }
 
     onKeysPressed(keysString) {
-        this._shortcutService.getSingleShortcutAnswer(this.editor, this.shortcutQuestion, keysString).subscribe(isCorrect => this.processAnswer(isCorrect));
+       this._shortcutService.getSingleShortcutAnswer(this.editor, this.shortcutQuestion, keysString).subscribe(isCorrect => this.processAnswer(isCorrect));
     }
 
     processAnswer(correct: boolean) {
+        
         this.historyShortcuts.push({ name: this.shortcutQuestion, correct: correct });
+        this.getQuestion();
     }
 
+    private getQuestion(){
+        this._shortcutService.getSingleShortcutQuestion(this.editor, this.categories).subscribe(question => this.shortcutQuestion = question);        
+}
 
     onPussyOutClick() {
         this._router.navigate(['Home']);

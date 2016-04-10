@@ -5,8 +5,8 @@
             <div class="panel-heading">
                 <h2 class="panel-title">Drag your chosen categories from here</h2>
             </div>
-            <div class="panel-body" [dragula]="'first-bag'">
-                <ul class="list-group" *ngFor="#category of categories">
+            <div class="panel-body" [dragula]="'first-bag'" [dragulaModel]="categoriesToPick">
+                <ul class="list-group" *ngFor="#category of categoriesToPick">
                     <li class="list-group-item">{{category}}</li>
                 </ul>
             </div>
@@ -17,7 +17,10 @@
             <div class="panel-heading">
                 <h2 class="panel-title">Drop your chosen categories here</h2>
             </div>
-            <div class="panel-body" [dragula]="'first-bag'">
+            <div class="panel-body" [dragula]="'first-bag'" [dragulaModel]="chosenCategories">
+                 <ul class="list-group"*ngFor='#category of chosenCategories'>
+                     <li class="list-group-item">{{category}}</li>
+                 </ul>
             </div>
         </div>
     </div>
