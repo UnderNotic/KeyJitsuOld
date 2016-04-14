@@ -28,7 +28,6 @@ export class ShortcutInputDirective implements OnDestroy {
         };
     }
 
-
     onKeyDownUp(event: KeyboardEvent) {
         this.keyMap[event.keyCode] = event.type == 'keydown';
         this.getPressedKeys();

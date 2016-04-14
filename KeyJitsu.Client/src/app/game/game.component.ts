@@ -1,4 +1,4 @@
-import {Component, OnInit} from 'angular2/core'
+import {Component, OnInit, AfterViewInit, ViewChild, ElementRef, Renderer} from 'angular2/core'
 import {JumboComponent} from '../jumbo/jumbo.component'
 import {Shortcut} from '../interfaces/shortcut'
 import {ShortcutAnswer} from '../interfaces/shortcutAnswer'
@@ -14,21 +14,27 @@ import {Router, RouteParams} from 'angular2/router'
     providers: [ShortcutService],
     directives: [JumboComponent, ShortcutInputDirective]
 })
-export class GameComponent implements OnInit {
+export class GameComponent implements OnInit, AfterViewInit {
 
+    @ViewChild('shortcutInput') input: ElementRef;
+    
     private keyMap: boolean[] = []
     historyShortcuts: ShortcutAnswer[] = []
     shortcutQuestion: string
     editor: string
     categories: string[]
 
-    constructor(private _shortcutService: ShortcutService, private _router: Router, routerParams: RouteParams) {
+    constructor(private _shortcutService: ShortcutService, private _router: Router, routerParams: RouteParams, private renderer: Renderer) {
         this.editor = routerParams.get('editor');
         this.categories = routerParams.get('categories');
     }
 
     ngOnInit() {
         this.getQuestion();
+    }
+    
+    ngAfterViewInit(){
+        this.renderer.invokeElementMethod(this.input.nativeElement, 'focus', []);
     }
 
     onKeysPressed(keysString) {
