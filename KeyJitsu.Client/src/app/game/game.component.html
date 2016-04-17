@@ -4,7 +4,8 @@
         <div class="form-group">
             <label class="control-label" for="focusedInput">
                 <h3>{{shortcutQuestion}}</h3></label>
-            <input #shortcutInput shortcutInput (keysPressed)="onKeysPressed($event)" class="form-control" id="focusedInput" type="text" value="Type in shortcut" autofocus>
+            <input #shortcutInput shortcutInput (keysPressed)="onKeysPressed($event)" class="form-control" id="focusedInput" type="text"
+                value="Type in shortcut" autofocus>
         </div>
     </div>
 </div>
@@ -23,7 +24,7 @@
 
     <div class="col-md-6 text-center">
         <br>
-          <h2>Cool image with shortcut</h2>
+        <h2>Cool image with shortcut</h2>
     </div>
 </div>
 
@@ -39,5 +40,5 @@
 </div>
 
 <div class="row pull-right">
-    <button (click)="onPussyOutClick()" class="btn btn-primary btn-lg">Pussy out...</button>    
+    <button (click)="onPussyOutClick()" class="btn btn-primary btn-lg">Pussy out...</button>
 </div>

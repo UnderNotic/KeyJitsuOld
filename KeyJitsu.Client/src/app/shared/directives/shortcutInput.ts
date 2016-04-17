@@ -1,12 +1,9 @@
 import {Directive, ElementRef, Input, Output, EventEmitter, OnDestroy } from 'angular2/core'
 import {KeyCodeParser} from '../services/keyCodeParser.service'
+import {Observable} from 'rxjs/Rx'
 // use rx to capture keyboard input with throttle
 @Directive({
-    selector: '[shortcutInput]',
-    host: {
-        '(keydown)': 'onKeyDownUp($event)',
-        '(keyup)': 'onKeyDownUp($event)'
-    }
+    selector: '[shortcutInput]'
 })
 export class ShortcutInputDirective implements OnDestroy {
     @Output() keysPressed = new EventEmitter();
@@ -14,34 +11,41 @@ export class ShortcutInputDirective implements OnDestroy {
     private keyMap: boolean[] = []
     constructor(private _el: ElementRef, private _keyCodeParser: KeyCodeParser) {
         this.preventDefaultKeyBehaviour();
+        this.observeKeyPress();
     }
 
     private preventDefaultKeyBehaviour() {
         var that = this;
-        document.onkeyup = function(event) {
+        document.onkeyup = function (event) {
             event.stopPropagation();
             event.preventDefault();
         };
-        document.onkeydown = function(event) {
+        document.onkeydown = function (event) {
             event.stopPropagation();
             event.preventDefault();
         };
     }
 
-    onKeyDownUp(event: KeyboardEvent) {
+    private observeKeyPress() {
+        var downObservable = Observable.fromEvent(document, 'keydown');
+        var upObservable = Observable.fromEvent(document, 'keyup');
+        downObservable.merge(upObservable).subscribe(event => this.onKeyDownUp(event));
+    }
+
+    private onKeyDownUp(event: KeyboardEvent) {
         this.keyMap[event.keyCode] = event.type == 'keydown';
-        this.getPressedKeys();
+        var pressedCharacters = this.getPressedKeys();
+        if(this.keyMap.every(x => x == false)) this.keysPressed.emit(pressedCharacters);
     }
 
-    getPressedKeys() {
+    private getPressedKeys() : string[] {
         var pressedKeysCodes = [];
         this.keyMap.forEach((isPressed, keyCode) => {
             if (isPressed) {
                 pressedKeysCodes.push(keyCode);
             }
         });
-        var pressedCharacters = pressedKeysCodes.map(keyCode => this._keyCodeParser.mapKeyCodeToActualCharacter(keyCode))
-        this.keysPressed.emit(pressedCharacters);
+        return pressedKeysCodes.map(keyCode => this._keyCodeParser.mapKeyCodeToActualCharacter(keyCode))
     }
 
     setWrongStyle() {
@@ -52,9 +56,8 @@ export class ShortcutInputDirective implements OnDestroy {
         this._el.nativeElement.style.backgroundColor = "green";
     }
 
-
     ngOnDestroy() {
-        document.onkeyup = function(event) { };
-        document.onkeydown = function(event) { };
+        document.onkeyup = function (event) { };
+        document.onkeydown = function (event) { };
     }
 }

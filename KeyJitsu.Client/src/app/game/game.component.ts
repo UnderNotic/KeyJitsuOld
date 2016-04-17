@@ -26,7 +26,9 @@ export class GameComponent implements OnInit, AfterViewInit {
 
     constructor(private _shortcutService: ShortcutService, private _router: Router, routerParams: RouteParams, private renderer: Renderer) {
         this.editor = routerParams.get('editor');
-        this.categories = routerParams.get('categories');
+        
+        var routerParam = routerParams.get('categories');
+        this.categories = Object.prototype.toString.call(routerParam) == '[object String]' ? [routerParam] : routerParam;
     }
 
     ngOnInit() {
@@ -42,7 +44,6 @@ export class GameComponent implements OnInit, AfterViewInit {
     }
 
     processAnswer(correct: boolean) {
-        
         this.historyShortcuts.push({ name: this.shortcutQuestion, correct: correct });
         this.getQuestion();
     }
