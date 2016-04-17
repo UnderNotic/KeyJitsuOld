@@ -43,8 +43,8 @@ export class GameComponent implements OnInit, AfterViewInit {
        this._shortcutService.getSingleShortcutAnswer(this.editor, this.shortcutQuestion, keysString).subscribe(isCorrect => this.processAnswer(keysString, isCorrect));
     }
 
-    processAnswer(keysStrings: string[], correct: boolean) {
-        this.historyShortcuts.push({ name: this.shortcutQuestion, correct: correct, keys: keysStrings.join(' + ')});
+    processAnswer(keysString: string, correct: boolean) {
+        this.historyShortcuts.push({ name: this.shortcutQuestion, correct: correct, keys: keysString});
         var length = this.historyShortcuts.length;
         if(length > 6) this.historyShortcuts = this.historyShortcuts.slice(length - 6, length);
         this.getQuestion();
