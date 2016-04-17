@@ -1,0 +1,19 @@
+#focusedInput{
+    font-size: 2em;
+    background: transparent;
+    border : 0px;
+    padding: 15px;
+}
+
+#focusedInput:focus, input:focus{
+    outline: none;
+}
+
+.right{
+     background-color: #00bc8c;
+    color: white;
+}
+
+.wrong{
+    background-color: #e74c3c;
+}

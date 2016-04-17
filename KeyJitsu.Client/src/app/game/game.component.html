@@ -1,12 +1,14 @@
 <jumbo></jumbo>
 <div class="row">
-    <div class="col-md-12 text-center">
-        <div class="form-group">
-            <label class="control-label" for="focusedInput">
-                <h3>{{shortcutQuestion}}</h3></label>
-                <input #shortcutInput shortcutInput (keysPressed)="onKeysPressed($event)" class="form-control" id="focusedInput" type="text"
-                value="Type in shortcut" autofocus>
-        </div>
+    <div class="col-md-1 col-md-offset-2">
+        <br>
+        <input #shortcutInput shortcutInput (keysPressed)="onKeysPressed($event)" id="focusedInput" type="text"
+            autofocus>
+    </div>
+    <div class="col-md-6 text-center">
+        <hr>
+        <h2>{{shortcutQuestion}}</h2>
+        <hr>
     </div>
 </div>
 
@@ -15,8 +17,17 @@
         <div class="panel panel-default">
             <div class="panel-heading">History</div>
             <div class="panel-body">
-                <ul class="list-group" *ngFor="#historyShortcut of historyShortcuts">
-                    <li class="list-group-item">{{historyShortcut.name}} </li>
+                <ul class="list-group" *ngFor="#historyShortcut of historyShortcuts.reverse()">
+                    <li class="list-group-item text-center" [ngClass]="{right: historyShortcut.correct, wrong: !historyShortcut.correct}">
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3">
+                                {{historyShortcut.name}}
+                            </div>
+                            <div col-md-3>
+                                <b> {{historyShortcut.keys}} </b>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
