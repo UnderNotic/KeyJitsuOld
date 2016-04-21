@@ -1,5 +1,5 @@
 import {Injectable} from 'angular2/core'
-import {Http, Response} from 'angular2/http'
+import {Http, Response, Headers, RequestOptions} from 'angular2/http'
 import {Shortcut} from '../../interfaces/shortcut'
 import {Observable} from 'rxjs/Rx'
 
@@ -11,12 +11,15 @@ export class ShortcutService {
     constructor(private http: Http) { }
 
     getSingleShortcutQuestion(editor: string, categories: string[]): Observable<string> {
-        var category = categories.reduce((previousValue, currentValue) => `${previousValue}&category[]=${currentValue}`);
+        let category = categories.reduce((previousValue, currentValue) => `${previousValue}&category[]=${currentValue}`);
         return this.http.get(`${this.URL}/Shortcuts/GetSingleShortcutQuestion?editor=${editor}&categories=${category}`).map(res => <string>res.json()).catch(this.handleError);
     }
 
     getSingleShortcutAnswer(editor: string, name: string, hotkey: string): Observable<boolean> {
-        return this.http.get(`${this.URL}/Shortcuts/GetSingleShortcutAnswer?editor=${editor}&name=${name}&hotkey=${hotkey}`).map(res => <boolean>res.json()).catch(this.handleError);
+        let body = JSON.stringify({ editor, name, hotkey });
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        return this.http.post(`${this.URL}/Shortcuts/GetSingleShortcutAnswer`, body, options).map(res => <boolean>res.json()).catch(this.handleError);
     }
 
     getAllCategories(editor: string): Observable<string[]> {

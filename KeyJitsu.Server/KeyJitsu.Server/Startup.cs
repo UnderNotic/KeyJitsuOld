@@ -1,10 +1,12 @@
-﻿using System.Reflection;
+﻿using System.Configuration;
+using System.Reflection;
 using System.Web.Http;
 using Autofac;
 using Autofac.Integration.WebApi;
 using KeyJitsu.Server.Providers;
 using KeyJitsu.Server.Services;
 using Microsoft.Owin;
+using Microsoft.Owin.Cors;
 using Owin;
 
 [assembly: OwinStartup(typeof(KeyJitsu.Server.Startup))]
@@ -24,15 +26,21 @@ namespace KeyJitsu.Server
             var container = builder.Build();
             httpConfig.DependencyResolver = new AutofacWebApiDependencyResolver(container);
 
+            if (ConfigurationManager.AppSettings["CorsEnabled"] == "true")
+            {
+                app.UseCors(CorsOptions.AllowAll);
+            }
+
             app.UseAutofacMiddleware(container);
             app.UseAutofacWebApi(httpConfig);
             app.UseWebApi(httpConfig);
+
+       
         }
 
         private void ConfigureRouting(HttpConfiguration httpConfiguration)
         {
             httpConfiguration.MapHttpAttributeRoutes();
-
             httpConfiguration.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{action}/{id}",

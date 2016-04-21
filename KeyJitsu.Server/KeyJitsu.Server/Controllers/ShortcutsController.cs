@@ -1,10 +1,13 @@
-﻿using System.CodeDom;
+﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using KeyJitsu.Server.Models;
 using KeyJitsu.Server.Providers;
 using KeyJitsu.Server.Services;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Schema;
 
 namespace KeyJitsu.Server.Controllers
 {
@@ -38,14 +41,16 @@ namespace KeyJitsu.Server.Controllers
             }
         }
 
-        public bool GetSingleShortcutAnswer([FromUri] string editor, [FromUri] string name, [FromUri] string hotkey)
+        [HttpPost]
+        public bool GetSingleShortcutAnswer(JObject jsonData)
         {
+            dynamic json = jsonData;
             try
             {
-                return _shortcutDataProvider.ShortcutSheets.First(sheet => sheet.Editor == editor)
+                return _shortcutDataProvider.ShortcutSheets.First(sheet => sheet.Editor == json.editor)
                     .Categories.SelectMany(pair => pair.Value)
-                    .First(shortcut => shortcut.Name == name)
-                    .Keys == hotkey;
+                    .First(shortcut => shortcut.Name == json.name)
+                    .Keys.ToUpper() == json.hotkey.ToUpper();
             }
             catch
             {
