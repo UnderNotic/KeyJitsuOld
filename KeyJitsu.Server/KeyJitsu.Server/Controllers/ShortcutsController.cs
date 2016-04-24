@@ -1,5 +1,4 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -7,7 +6,6 @@ using KeyJitsu.Server.Models;
 using KeyJitsu.Server.Providers;
 using KeyJitsu.Server.Services;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Schema;
 
 namespace KeyJitsu.Server.Controllers
 {
@@ -42,15 +40,20 @@ namespace KeyJitsu.Server.Controllers
         }
 
         [HttpPost]
-        public bool GetSingleShortcutAnswer(JObject jsonData)
+        public bool GetSingleShortcutAnswer([FromBody] JObject jsonData)
         {
             dynamic json = jsonData;
+
+            var editor = (string)json.editor;
+            var name = (string)json.name;
+            var hotkey = (string)json.hotkey;
+          
             try
             {
-                return _shortcutDataProvider.ShortcutSheets.First(sheet => sheet.Editor == json.editor)
+                return string.Equals(_shortcutDataProvider.ShortcutSheets.First(sheet => sheet.Editor == editor)
                     .Categories.SelectMany(pair => pair.Value)
-                    .First(shortcut => shortcut.Name == json.name)
-                    .Keys.ToUpper() == json.hotkey.ToUpper();
+                    .First(shortcut => shortcut.Name == name)
+                    .Keys, hotkey, StringComparison.CurrentCultureIgnoreCase);
             }
             catch
             {

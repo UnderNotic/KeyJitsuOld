@@ -4,6 +4,7 @@ using KeyJitsu.Server.Controllers;
 using KeyJitsu.Server.Providers;
 using KeyJitsu.Server.Services;
 using Moq;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace KeyJitsu.Server.Tests.Controllers
@@ -60,9 +61,10 @@ namespace KeyJitsu.Server.Tests.Controllers
             // Arrange
             var provider = new ShortcutDataProvider();
             var controller = new ShortcutsController(provider, new Mock<IRandomShortcutPicker>().Object);
-            
+            var jObject = new JObject() { {"editor", "VisualStudioResharper" }, {"name", "Doesnt exist" }, {"hotkey", "Doesnt matter" } };
+
             // Act
-            var response = controller.GetSingleShortcutAnswer("VisualStudioResharper", "Doesnt exist", "Doesnt matter");
+            var response = controller.GetSingleShortcutAnswer(jObject);
 
             // Assert
             var expectedResult = false;
@@ -76,9 +78,10 @@ namespace KeyJitsu.Server.Tests.Controllers
             // Arrange
             var provider = new ShortcutDataProvider();
             var controller = new ShortcutsController(provider, new Mock<IRandomShortcutPicker>().Object);
+            var jObject = new JObject { { "editor", "Doesnt" }, { "name", "Doesnt exist" }, { "hotkey", "Doesnt matter" } };
 
             // Act
-            var response = controller.GetSingleShortcutAnswer("Doesnt exist", "Doesnt matter", "Doesnt matter");
+            var response = controller.GetSingleShortcutAnswer(jObject);
 
             // Assert
             var expectedResult = false;
@@ -93,9 +96,19 @@ namespace KeyJitsu.Server.Tests.Controllers
             var provider = new ShortcutDataProvider();
             var controller = new ShortcutsController(provider, new Mock<IRandomShortcutPicker>().Object);
 
+            var jObject1 = new JObject() as dynamic;
+            jObject1.editor = "VisualStudioResharper";
+            jObject1.name = "Go to everything";
+            jObject1.hotkey = "Ctrl + T";
+
+            var jObject2 = new JObject() as dynamic;
+            jObject2.editor = "VisualStudioResharper";
+            jObject2.name = "Go to everything";
+            jObject2.hotkey = "Ctrl + X";
+
             // Act
-            var response1 = controller.GetSingleShortcutAnswer("VisualStudioResharper", "Go to everything", "Ctrl + T");
-            var response2 = controller.GetSingleShortcutAnswer("VisualStudioResharper", "Go to everything", "Ctrl + X");
+            var response1 = controller.GetSingleShortcutAnswer(jObject1);
+            var response2 = controller.GetSingleShortcutAnswer(jObject2);
 
             // Assert
             var expectedResult1 = true;
