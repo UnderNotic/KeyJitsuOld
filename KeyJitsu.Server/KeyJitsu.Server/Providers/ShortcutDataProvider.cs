@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Web.Http;
 using KeyJitsu.Server.Models;
 
 namespace KeyJitsu.Server.Providers
@@ -8,6 +10,7 @@ namespace KeyJitsu.Server.Providers
     public interface IShortcutDataProvider
     {
         IReadOnlyList<EditorShortcutSheet> ShortcutSheets { get; }
+        IList<Shortcut> GetAllShortcuts(string editor, IEnumerable<string> categories);
     }
 
     public class ShortcutDataProvider : IShortcutDataProvider
@@ -16,7 +19,7 @@ namespace KeyJitsu.Server.Providers
 
         public ShortcutDataProvider()
         {
-            var VisualStudioResharperSheet = new EditorShortcutSheet("VisualStudioResharper",
+            var visualStudioResharperSheet = new EditorShortcutSheet("VisualStudioResharper",
                 new ReadOnlyDictionary<string, IReadOnlyList<Shortcut>>(new Dictionary<string, IReadOnlyList<Shortcut>>
                 {
                     {"Explore", new List<Shortcut>
@@ -34,7 +37,7 @@ namespace KeyJitsu.Server.Providers
                             new Shortcut(1, "Go to next usage", "Ctrl + Alt + PgDn"),
                             new Shortcut(1, "Analyze References window", "Ctrs + Alt + Y"),
                             new Shortcut(1, "Navigate to", "Alt + `"),
-                            new Shortcut(1, "Go to declaratrion", " F12"),
+                            new Shortcut(1, "Go to declaration", " F12"),
                             new Shortcut(1, "Go to type of symbol", "Ctrl + Shift + F11"),
                             new Shortcut(1, "Go to implementation", "Ctrl + F12"),
                             new Shortcut(1, "Go to base symbols", "Alt + Home"),
@@ -118,8 +121,14 @@ namespace KeyJitsu.Server.Providers
 
             ShortcutSheets = new List<EditorShortcutSheet>
             {
-                VisualStudioResharperSheet
+                visualStudioResharperSheet
             };
+        }
+
+        public IList<Shortcut> GetAllShortcuts([FromUri] string editor, [FromUri] IEnumerable<string> categories)
+        {
+            return ShortcutSheets.First(sheet => sheet.Editor == editor)
+                 .Categories.Where(category => categories.Contains(category.Key)).SelectMany(category => category.Value).ToList();
         }
     }
 }

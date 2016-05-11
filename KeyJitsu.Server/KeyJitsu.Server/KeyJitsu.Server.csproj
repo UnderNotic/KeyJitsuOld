@@ -129,6 +129,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ShortcutsController.cs" />
+    <Compile Include="Filters\FilterFactory.cs" />
+    <Compile Include="Filters\IFilter.cs" />
     <Compile Include="Models\EditorShortcutSheet.cs" />
     <Compile Include="Models\Shortcut.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -143,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Compile Include="Filters\ShorcutsForChromeFilter.cs" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

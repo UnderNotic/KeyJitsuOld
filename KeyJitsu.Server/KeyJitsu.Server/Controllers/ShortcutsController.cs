@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using KeyJitsu.Server.Filters;
 using KeyJitsu.Server.Models;
 using KeyJitsu.Server.Providers;
 using KeyJitsu.Server.Services;
@@ -13,25 +14,29 @@ namespace KeyJitsu.Server.Controllers
     {
         private readonly IShortcutDataProvider _shortcutDataProvider;
         private readonly IRandomShortcutPicker _randomShortcutPicker;
+        private readonly IFilterFactory _filterFactory;
 
-        public ShortcutsController(IShortcutDataProvider shortcutDataProvider, IRandomShortcutPicker randomShortcutPicker)
+        public ShortcutsController(IShortcutDataProvider shortcutDataProvider, IRandomShortcutPicker randomShortcutPicker, IFilterFactory filterFactory)
         {
             _shortcutDataProvider = shortcutDataProvider;
             _randomShortcutPicker = randomShortcutPicker;
+            _filterFactory = filterFactory;
         }
 
         public Shortcut GetSingleShortcut([FromUri] string editor, [FromUri] IEnumerable<string> categories)
         {
-            return _randomShortcutPicker.GetRandomShortcutBasedOnPriorities(GetAllShortcuts(editor, categories).ToList());
+            return _randomShortcutPicker.GetRandomShortcutBasedOnPriorities(_shortcutDataProvider.GetAllShortcuts(editor, categories).ToList());
         }
 
         public string GetSingleShortcutQuestion([FromUri] string editor, [FromUri] IEnumerable<string> categories)
         {
             try
             {
+                var allShortcuts = IsChromeAsking() ?
+                    _shortcutDataProvider.GetAllShortcuts(editor, categories).Where(_filterFactory.GetFilter<ShortcutsForChromeFilter>().FilterPredicate)
+                    : _shortcutDataProvider.GetAllShortcuts(editor, categories);
                 return
-                    _randomShortcutPicker.GetRandomShortcutBasedOnPriorities(
-                        GetAllShortcuts(editor, categories).ToList()).Name;
+                    _randomShortcutPicker.GetRandomShortcutBasedOnPriorities(allShortcuts.ToList()).Name;
             }
             catch
             {
@@ -47,7 +52,7 @@ namespace KeyJitsu.Server.Controllers
             var editor = (string)json.editor;
             var name = (string)json.name;
             var hotkey = (string)json.hotkey;
-          
+
             try
             {
                 return string.Equals(_shortcutDataProvider.ShortcutSheets.First(sheet => sheet.Editor == editor)
@@ -58,7 +63,7 @@ namespace KeyJitsu.Server.Controllers
             catch
             {
                 return false;
-            }                
+            }
         }
 
         public IList<string> GetAllCategories([FromUri] string editor)
@@ -66,12 +71,12 @@ namespace KeyJitsu.Server.Controllers
             return
                 _shortcutDataProvider.ShortcutSheets.First(sheet => sheet.Editor == editor)
                     .Categories.Select(category => category.Key).ToList();
-        } 
+        }
 
-        public IList<Shortcut> GetAllShortcuts([FromUri] string editor, [FromUri] IEnumerable<string> categories)
+        private bool IsChromeAsking()
         {
-            return _shortcutDataProvider.ShortcutSheets.First(sheet => sheet.Editor == editor)
-                 .Categories.Where(category => categories.Contains(category.Key)).SelectMany(category => category.Value).ToList();
+            var currentRequest = this.Request;
+            return currentRequest.Headers.UserAgent.ToString().Contains("Chrome");
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Web.Http;
 using Autofac;
 using Autofac.Integration.WebApi;
+using KeyJitsu.Server.Filters;
 using KeyJitsu.Server.Providers;
 using KeyJitsu.Server.Services;
 using Microsoft.Owin;
@@ -52,6 +53,7 @@ namespace KeyJitsu.Server
         {
             builder.RegisterType<ShortcutDataProvider>().As<IShortcutDataProvider>();
             builder.RegisterType<RandomShortcutPicker>().As<IRandomShortcutPicker>();
+            builder.RegisterType<FilterFactory>().As<IFilterFactory>();
         }
     }
 }
