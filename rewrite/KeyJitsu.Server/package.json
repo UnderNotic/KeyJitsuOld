@@ -1,0 +1,32 @@
+{
+  "name": "keyjitsu.server",
+  "version": "0.0.1",
+  "description": "KeyJitsu Server",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UnderNotic/KeyJitsu.git"
+  },
+  "keywords": [
+    "keyjitsu"
+  ],
+  "author": "undernotic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UnderNotic/KeyJitsu/issues"
+  },
+  "homepage": "https://github.com/UnderNotic/KeyJitsu#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "jest": "^21.2.1"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "engines": {
+    "node": ">= 8.0"
+  }
+}
