@@ -4,8 +4,7 @@ import { App } from "../index";
 import AppRedux from "../index";
 import { configure } from "enzyme";
 import { shallow, render, mount } from "enzyme";
-import { Provider } from "react-redux";
-import configureStore from "configureStore";
+import reduxWrapper from "utils/reduxTestWrapper";
 
 configure({ adapter: new Adapter() });
 
@@ -22,18 +21,14 @@ describe("MyComponent", () => {
 
 describe("MyComponent with REDUX", () => {
   it("init state is correct", () => {
-    const store = configureStore();
+    const [, store] = reduxWrapper(null);
 
     expect(store.getState().mainReducer.isToggled).toBe(false);
   });
 
   it("shows true on single click", () => {
-    const store = configureStore();
-    const wrapperRedux = mount(
-      <Provider store={store}>
-        <AppRedux />
-      </Provider>
-    );
+    const [Comp] = reduxWrapper(AppRedux);
+    const wrapperRedux = mount(Comp);
 
     expect(wrapperRedux).toHaveLength(1);
     expect(wrapperRedux.find("button")).toHaveLength(1);
@@ -43,13 +38,9 @@ describe("MyComponent with REDUX", () => {
   });
 
   it("shows false on double click", () => {
-    const store = configureStore();
-    const wrapperRedux = mount(
-      <Provider store={store}>
-        <AppRedux />
-      </Provider>
-    );
-
+    const [Comp] = reduxWrapper(AppRedux);
+    const wrapperRedux = mount(Comp);
+    
     wrapperRedux.find({ "data-test": "btn" }).simulate("click");
     wrapperRedux.find({ "data-test": "btn" }).simulate("click");
     expect(wrapperRedux.containsAllMatchingElements(["false"])).toEqual(true);
