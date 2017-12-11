@@ -27,7 +27,7 @@ describe("MyComponent with REDUX", () => {
   });
 
   it("shows true on single click", () => {
-    const [Comp] = reduxWrapper(AppRedux);
+    const [Comp] = reduxWrapper(<AppRedux/>);
     const wrapperRedux = mount(Comp);
 
     expect(wrapperRedux).toHaveLength(1);
@@ -38,7 +38,7 @@ describe("MyComponent with REDUX", () => {
   });
 
   it("shows false on double click", () => {
-    const [Comp] = reduxWrapper(AppRedux);
+    const [Comp] = reduxWrapper(<AppRedux/>);
     const wrapperRedux = mount(Comp);
     
     wrapperRedux.find({ "data-test": "btn" }).simulate("click");

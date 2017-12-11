@@ -6,7 +6,7 @@ export default (Comp) => {
     const store = configureStore();
     return [(
         <Provider store={store}>
-            <Comp />
+            {Comp}
         </Provider>
     ), store];
 }
